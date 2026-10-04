@@ -1,0 +1,13 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { articles } from "@/content/articles";
+import { Eyebrow, ClosingCTA } from "@/components/editorial";
+import { Arrow } from "@/components/graphics";
+import { pageMetadata } from "@/lib/site";
+export function generateStaticParams() { return articles.map(({ slug }) => ({ slug })); }
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) { const { slug } = await params; const article = articles.find(a => a.slug === slug); if (!article) return {}; return { ...pageMetadata(article.title, article.intro, `/field-notes/${slug}`), openGraph: { title: article.title, description: article.intro, type: "article" } }; }
+export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params; const article = articles.find(a => a.slug === slug); if (!article) notFound();
+  const related = articles.find(a => a.slug !== slug)!;
+  return <><article className="article-page page-gutter"><header className="article-header"><Link href="/field-notes" className="text-link">← All field notes</Link><Eyebrow>{article.category} / {article.readTime}</Eyebrow><h1>{article.title}</h1><p className="article-deck">{article.intro}</p><div className="article-byline"><span>THE STEADY JOURNAL</span><span>EDITORIAL CONCEPT BY ADROCITY STUDIOS</span></div></header><div className="article-layout"><aside className="article-sidebar"><span className="eyebrow">IN THIS NOTE</span><nav aria-label="Article contents">{article.sections.map((section, i) => <a key={section.heading} href={`#section-${i + 1}`}><span>0{i + 1}</span>{section.heading}</a>)}</nav><p>General information only. A qualified technician should assess the equipment and conditions in your home.</p></aside><div className="article-body">{article.sections.map((section, i) => <section key={section.heading} id={`section-${i + 1}`}><h2>{section.heading}</h2>{section.paragraphs.map(paragraph => <p key={paragraph.slice(0, 30)}>{paragraph}</p>)}{section.bullets && <ul>{section.bullets.map(bullet => <li key={bullet}>{bullet}</li>)}</ul>}</section>)}<aside className="article-takeaway"><span className="eyebrow">TAKE THIS WITH YOU</span><p>{article.takeaway}</p></aside><Link className="button button-dark" href={article.relatedHref}>{article.relatedLabel}<Arrow /></Link><div className="article-related"><span className="eyebrow">ANOTHER USEFUL NOTE</span><Link href={`/field-notes/${related.slug}`}>{related.title}<Arrow diagonal /></Link></div></div></div></article><ClosingCTA /></>;
+}
