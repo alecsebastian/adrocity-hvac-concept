@@ -8,7 +8,7 @@ import { Experience } from "@/components/experience";
 import { ContactNudge, RevealOnScroll } from "@/components/enhancements";
 
 export const metadata: Metadata = {
-  metadataBase: process.env.NEXT_PUBLIC_SITE_URL ? new URL(process.env.NEXT_PUBLIC_SITE_URL) : undefined,
+  metadataBase: new URL('https://hvac.adrocitystudios.com'),
   title: { default: "Steady Heating & Air — Good air. Steady hands.", template: "%s | Steady Heating & Air" },
   description: "A fictional Columbus heating and cooling company. Explore a custom website and inquiry experience by Adrocity Studios.",
   robots: { index: false, follow: false },

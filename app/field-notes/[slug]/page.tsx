@@ -5,7 +5,7 @@ import { Eyebrow, ClosingCTA } from "@/components/editorial";
 import { Arrow } from "@/components/graphics";
 import { pageMetadata } from "@/lib/site";
 export function generateStaticParams() { return articles.map(({ slug }) => ({ slug })); }
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) { const { slug } = await params; const article = articles.find(a => a.slug === slug); if (!article) return {}; return { ...pageMetadata(article.title, article.intro, `/field-notes/${slug}`), openGraph: { title: article.title, description: article.intro, type: "article" } }; }
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) { const { slug } = await params; const article = articles.find(a => a.slug === slug); if (!article) return {}; return { ...pageMetadata(article.title, article.intro, `/field-notes/${slug}`), openGraph: { title: article.title, description: article.intro, url: `/field-notes/${slug}`, type: "article", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Steady Heating & Air website concept" }] } }; }
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params; const article = articles.find(a => a.slug === slug); if (!article) notFound();
   const related = articles.find(a => a.slug !== slug)!;

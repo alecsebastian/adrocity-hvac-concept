@@ -69,7 +69,7 @@ No real embed URL or product-specific integration instructions were supplied in 
 
 `netlify.toml` specifies Node 22, `npm run build`, and publish directory `out`. Static export requires no Netlify adapter or Next server runtime. There is no catch-all SPA rewrite: each page has its own HTML and the project includes a proper `404.html`.
 
-No deployment, DNS change, or production portfolio edit has been made. When publishing is authorized, set an actual `NEXT_PUBLIC_SITE_URL` and rebuild for canonical URLs, metadata origin, and the sitemap. Without that value, the project intentionally emits no fictional canonical host and an empty sitemap. It does not default to a production agency domain.
+Public canonical URLs, share metadata, and the sitemap use `https://hvac.adrocitystudios.com`; pages remain noindex. Local edits do not change the live site until deployed.
 
 ## Fictional-site search protections
 

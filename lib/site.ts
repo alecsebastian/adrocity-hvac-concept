@@ -21,8 +21,8 @@ export const embedUrl = (() => {
 export function pageMetadata(title: string, description: string, path: string) {
   return {
     title, description,
-    alternates: process.env.NEXT_PUBLIC_SITE_URL ? { canonical: path } : undefined,
-    openGraph: { title: `${title} | Steady Heating & Air`, description, type: "website" as const },
-    twitter: { card: "summary" as const, title: `${title} | Steady Heating & Air`, description },
+    alternates: { canonical: path },
+    openGraph: { title: `${title} | Steady Heating & Air`, description, url: path, type: "website" as const, images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Steady Heating & Air website concept" }] },
+    twitter: { card: "summary_large_image" as const, title: `${title} | Steady Heating & Air`, description, images: ["/og-image.png"] },
   };
 }
